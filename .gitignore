@@ -102,3 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# jca
+le-account.key
+zappa_settings.json
+.idea/
