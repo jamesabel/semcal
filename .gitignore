@@ -108,3 +108,5 @@ le-account.key
 zappa_settings.json
 .idea/
 aws/
+semcal-*.zip
+semcal-*.json
