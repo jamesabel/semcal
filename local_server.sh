@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-venv/bin/python semcal.py
+venv/bin/python -m semcal
