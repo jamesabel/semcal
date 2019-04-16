@@ -1,16 +1,18 @@
-import time
+
 import json
 
 import requests
 
-from flask import Flask
+from flask import Flask, Response
 
 app = Flask(__name__)
 
+mime_type = 'text/plain'
+
 
 @app.route('/')
-def hello_world():
-    return f'This is python.semcal.org. time.time() returned {time.time()}'
+def root_route():
+    return Response(response='usage : python.semcal.org/<package>[==<version>]', mimetype=mime_type)
 
 
 # todo: should this be <package>[==<version>] or <package>[/<version>] ?  The latter is more REST-like.
@@ -30,11 +32,15 @@ def sem_to_cal(package):
             version = package.split(double_equals)[1]
         else:
             version = pypi_data['info']['version']  # latest version
-        release = pypi_data["releases"][version][0]  # can there be more than one?
-        upload_time = release['upload_time']
-        calver = upload_time[0:7].replace('-','.')
-        cal_response = f"{version}:{calver}"
-    return cal_response
+        releases = pypi_data["releases"]
+        if version in releases:
+            release = releases[version][0]  # can there be more than one?
+            upload_time = release['upload_time']
+            calver = upload_time[0:7].replace('-','.')
+            cal_response = f"{version}:{calver}"
+        else:
+            cal_response = f"version {version} not found"
+    return Response(response=cal_response, mimetype=mime_type, status=request_response.status_code)
 
 
 if __name__ == '__main__':
