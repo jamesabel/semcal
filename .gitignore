@@ -107,3 +107,4 @@ venv.bak/
 le-account.key
 zappa_settings.json
 .idea/
+aws/
